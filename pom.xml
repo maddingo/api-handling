@@ -96,6 +96,12 @@
             <classifier>openapi</classifier>
             <type>yaml</type>
         </dependency>
+        <dependency>
+            <groupId>no.maddin</groupId>
+            <artifactId>api-handling</artifactId>
+            <version>1.2.1-SNAPSHOT</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -117,7 +123,10 @@
                     <execution>
                         <id>get-openapi</id>
                         <phase>generate-sources</phase>
-                        <goals><goal>copy-dependencies</goal></goals>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                            <goal>properties</goal>
+                        </goals>
                         <configuration>
                             <classifier>openapi</classifier>
                             <overWriteIfNewer>true</overWriteIfNewer>
@@ -125,6 +134,18 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0-M5</version>
+                <configuration>
+                    <reuseForks>false</reuseForks>
+                    <debugForkedProcess>true</debugForkedProcess>
+                    <systemPropertyVariables>
+                        <spring.jar>${no.maddin:api-handling:jar}</spring.jar>
+                    </systemPropertyVariables>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.openapitools</groupId>
