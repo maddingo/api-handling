@@ -13,8 +13,12 @@ import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.ServerSocket;
 import java.nio.file.Path;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -32,7 +36,7 @@ public class TimeClientTest {
     @BeforeAll
     static void startApp() throws IOException, InterruptedException {
         String javaBin = Path.of(System.getProperty("java.home"), "bin", "java").toString();
-        port = 8881;
+        port = findAvailableSocket();
         process = new ProcessBuilder().command(
             javaBin,
             "-jar",
@@ -42,6 +46,12 @@ public class TimeClientTest {
             .start();
 
         process.waitFor(10, TimeUnit.SECONDS);
+    }
+
+    private static int findAvailableSocket() throws IOException{
+        try (ServerSocket serverSocket = new ServerSocket(0)) {
+            return serverSocket.getLocalPort();
+        }
     }
 
     @AfterAll
@@ -55,8 +65,10 @@ public class TimeClientTest {
     void clientTest() throws ApiException {
         ApiClient client = new ApiClient();
         client.updateBaseUri("http://localhost:" + port);
+
+        String today = LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE);
         TimeResponse nowUTC = new TimeControllerApi(client).nowUTC();
 
-        assertThat(nowUTC, hasProperty("timeString", startsWith("2021")));
+        assertThat(nowUTC, hasProperty("timeString", startsWith(today)));
     }
 }
