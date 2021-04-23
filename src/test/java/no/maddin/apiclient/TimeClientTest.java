@@ -28,7 +28,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.Matchers.startsWith;
 
-public class TimeClientTest {
+class TimeClientTest {
 
     private static Process process;
     private static int port;
