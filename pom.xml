@@ -168,13 +168,15 @@
                         <goals><goal>generate</goal></goals>
                         <configuration>
                             <generatorName>java</generatorName>
-                            <library>native</library>
+                            <library>resttemplate</library>
                             <inputSpec>${basedir}/target/dependency/api-handling-openapi.yaml</inputSpec>
                             <generateApiTests>false</generateApiTests>
                             <generateModelTests>false</generateModelTests>
                             <generateApiDocumentation>false</generateApiDocumentation>
                             <generateModelDocumentation>false</generateModelDocumentation>
-                            <supportingFilesToGenerate>ApiClient.java,ApiException.java,Pair.java,ApiResponse.java</supportingFilesToGenerate>
+                            <configOptions>
+                                <dateLibrary>java8</dateLibrary>
+                            </configOptions>
                         </configuration>
                     </execution>
                 </executions>
