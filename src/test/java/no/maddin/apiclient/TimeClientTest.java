@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.openapitools.client.ApiClient;
 import org.openapitools.client.api.TimeControllerApi;
 import org.openapitools.client.model.TimeResponse;
+import reactor.core.publisher.Mono;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -57,8 +58,9 @@ class TimeClientTest {
         client.setBasePath("http://localhost:" + port);
 
         String today = LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE);
-        TimeResponse nowUTC = new TimeControllerApi(client).nowUTC();
+        new TimeControllerApi(client).nowUTC()
+            .subscribe(timeResponse -> assertThat(timeResponse, hasProperty("timeString", startsWith(today))));
 
-        assertThat(nowUTC, hasProperty("timeString", startsWith(today)));
+
     }
 }
