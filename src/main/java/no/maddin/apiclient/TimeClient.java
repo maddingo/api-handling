@@ -13,7 +13,7 @@ public class TimeClient {
             .subscribe(timeResponse -> log.info(timeResponse.getTimeString()))
             ;
         } catch (RestClientException e) {
-            e.printStackTrace();
+            log.error("Error calling time API", e);
         }
     }
 }
