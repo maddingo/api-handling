@@ -175,6 +175,9 @@
                             <generateApiDocumentation>false</generateApiDocumentation>
                             <generateModelDocumentation>false</generateModelDocumentation>
                             <supportingFilesToGenerate>ApiClient.java,ApiException.java,Pair.java,ApiResponse.java</supportingFilesToGenerate>
+                            <configOptions>
+                                <dateLibrary>java8</dateLibrary>
+                            </configOptions>
                         </configuration>
                     </execution>
                 </executions>
