@@ -17,6 +17,7 @@
 
     <modules>
         <module>step00</module>
+        <module>step01</module>
         <module>test-tools</module>
     </modules>
 
