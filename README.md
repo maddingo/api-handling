@@ -1,5 +1,3 @@
 # API Consumption and Generation
 
-This project demonstrates API contract generation for servers and client code generation from contracts.
-
-Each step is stored in a folder stepXX.
+This project is the demo project for the killercoda scenario at https://killercoda.com/maddingo/course/API_Management
