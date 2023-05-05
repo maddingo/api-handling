@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple REST Controller</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"/>
+</head>
+<body class="w3-sand">
+<div class="w3-container w3-khaki">
+    <h1>Simple REST Controller</h1>
+</div>
+<div class="w3-container">
+    <ul>
+        <li><a href="#" onclick="fetchData('/now/utc')">REST Endpoint (/now/utc)</a></li>
+    </ul>
+
+</div>
+
+<div class="w3-container">
+    <h2>Result</h2>
+    <div id="data-result">Click on the link above to fetch data</div>
+</div>
+
+<script>
+    function fetchData(uri) {
+        document.getElementById("data-result").innerHTML = "Loading...";
+        const xhttp = new XMLHttpRequest();
+        xhttp.onload = function() {
+            document.getElementById("data-result").innerHTML = this.responseText;
+        }
+        xhttp.open("GET", uri, true);
+        xhttp.send();
+    }
+</script>
+</body>
+</html>

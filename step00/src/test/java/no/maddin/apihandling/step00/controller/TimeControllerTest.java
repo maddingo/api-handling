@@ -7,7 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.ResponseEntity;
-import static no.maddin.HasRecordComponentWithValue.hasRecordComponent;
+import static no.maddin.HasRecordComponentWithValue.*;
 
 import java.time.ZonedDateTime;
 
