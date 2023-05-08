@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.io.ByteArrayInputStream;
@@ -33,7 +34,7 @@ public class OpenApiGeneratorTest {
     void generateOpenApiYaml() throws IOException {
         ResponseEntity<String> openApiResponse = rest.getForEntity("http://localhost:" + webPort + "/v3/api-docs.yaml", String.class);
 
-        assertThat(openApiResponse, hasProperty("statusCodeValue", equalTo(200)));
+        assertThat(openApiResponse, hasProperty("statusCode", equalTo(HttpStatus.OK)));
         assertThat(openApiResponse, hasProperty("body", instanceOf(String.class)));
 
         ByteArrayInputStream inStream = new ByteArrayInputStream(requireNonNull(openApiResponse.getBody()).getBytes(StandardCharsets.UTF_8));

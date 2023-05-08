@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import static no.maddin.HasRecordComponentWithValue.*;
 
@@ -34,5 +35,12 @@ public class TimeControllerTest {
                 )
             )
         );
+    }
+
+    @Test
+    void checkOAS() {
+        ResponseEntity<String> openApiResponse = rest.getForEntity("http://localhost:" + webPort + "/v3/api-docs.yaml", String.class);
+
+        assertThat(openApiResponse, hasProperty("statusCode", equalTo(HttpStatus.OK)));
     }
 }
