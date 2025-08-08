@@ -1,6 +1,2 @@
 server:
   forward-headers-strategy: framework
-
-springdoc:
-  show-actuator: true
-debug: false
