@@ -34,7 +34,7 @@ public class TimeControllerTest {
                     equalTo(HttpStatus.OK)
                 ),
                 hasProperty("body",
-                    hasProperty("timeString",
+                    hasRecordComponent("timeString",
                         startsWith(expectedYear)
                     )
                 )

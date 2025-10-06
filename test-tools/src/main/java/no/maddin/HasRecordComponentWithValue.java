@@ -12,7 +12,7 @@ import static org.hamcrest.Condition.matched;
 import static org.hamcrest.Condition.notMatched;
 import static org.hamcrest.beans.PropertyUtil.NO_ARGUMENTS;
 
-public class HasRecordComponentWithValue<T> extends TypeSafeDiagnosingMatcher<T> {
+public class HasRecordComponentWithValue<T extends Record> extends TypeSafeDiagnosingMatcher<T> {
     private static final Condition.Step<RecordComponent, Method> WITH_READ_METHOD = withReadMethod();
     private final String componentName;
     private final Matcher<Object> valueMatcher;
@@ -31,15 +31,12 @@ public class HasRecordComponentWithValue<T> extends TypeSafeDiagnosingMatcher<T>
     }
 
     private Condition.Step<Method, Object> withPropertyValue(final T bean) {
-        return new Condition.Step<Method, Object>() {
-            @Override
-            public Condition<Object> apply(Method readMethod, Description mismatch) {
-                try {
-                    return matched(readMethod.invoke(bean, NO_ARGUMENTS), mismatch);
-                } catch (Exception e) {
-                    mismatch.appendText(e.getMessage());
-                    return notMatched();
-                }
+        return (readMethod, mismatch) -> {
+            try {
+                return matched(readMethod.invoke(bean, NO_ARGUMENTS), mismatch);
+            } catch (Exception e) {
+                mismatch.appendText(e.getMessage());
+                return notMatched();
             }
         };
     }
@@ -68,20 +65,13 @@ public class HasRecordComponentWithValue<T> extends TypeSafeDiagnosingMatcher<T>
     }
 
     private static Condition.Step<RecordComponent,Method> withReadMethod() {
-        return new Condition.Step<RecordComponent, java.lang.reflect.Method>() {
-            @Override
-            public Condition<Method> apply(RecordComponent property, Description mismatch) {
-                final Method readMethod = property.getAccessor();
-                if (null == readMethod) {
-                    mismatch.appendText("record component \"" + property.getName() + "\" is not readable");
-                    return notMatched();
-                }
-                return matched(readMethod, mismatch);
-            }
+        return (property, mismatch) -> {
+            final Method readMethod = property.getAccessor();
+            return matched(readMethod, mismatch);
         };
     }
 
-    public static <T> Matcher<T> hasRecordComponent(String componentName, Matcher<?> valueMatcher) {
-        return new HasRecordComponentWithValue<T>(componentName, valueMatcher);
+    public static <T extends Record> Matcher<T> hasRecordComponent(String componentName, Matcher<?> valueMatcher) {
+        return new HasRecordComponentWithValue<>(componentName, valueMatcher);
     }
 }
