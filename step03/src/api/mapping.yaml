@@ -1,0 +1,31 @@
+openapi-processor-mapping: v4
+
+options:
+  package-name: no.maddin.apihandling.step03
+  javadoc: false
+  model-type: record
+  bean-validation: jakarta
+
+map:
+#  result: reactor.core.publisher.Mono<org.springframework.http.ResponseEntity>
+
+#  single: reactor.core.publisher.Mono
+#  multi: reactor.core.publisher.Flux
+#
+#  types:
+#    - type: object @ lombok.Builder
+#
+#  paths:
+#    /quotes:
+#      null: org.openapitools.jackson.nullable.JsonNullable
+#      parameters:
+#        - add: request => org.springframework.web.server.ServerWebExchange
+#      result: plain
+#    /quote:
+#      null: org.openapitools.jackson.nullable.JsonNullable
+#      parameters:
+#        - add: request => org.springframework.web.server.ServerWebExchange
+#    /quote/{id}:
+#      null: org.openapitools.jackson.nullable.JsonNullable
+#      parameters:
+#        - add: request => org.springframework.web.server.ServerWebExchange

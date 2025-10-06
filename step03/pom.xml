@@ -81,41 +81,34 @@
                 </executions>
             </plugin>
             <plugin>
-                <groupId>org.openapitools</groupId>
-                <artifactId>openapi-generator-maven-plugin</artifactId>
+                <groupId>io.openapiprocessor</groupId>
+                <artifactId>openapi-processor-maven-plugin</artifactId>
+                <version>2024.1</version>
+                <configuration>
+                    <id>spring</id>
+                    <apiPath>${project.build.directory}/dependency/step02-openapi.yaml</apiPath>
+                    <options>
+                        <values>
+                            <targetDir>${project.basedir}/target/generated-sources/spring</targetDir> <!-- can be removed when version > 2024.1 is released -->
+                            <mapping>${project.basedir}/src/api/mapping.yaml</mapping>
+                            <showWarnings>true</showWarnings>
+                        </values>
+                    </options>
+                </configuration>
                 <executions>
                     <execution>
-                        <id>generate-code</id>
-                        <goals><goal>generate</goal></goals>
+                        <id>process</id>
                         <phase>generate-sources</phase>
-                        <configuration>
-                            <!-- options see https://github.com/OpenAPITools/openapi-generator/tree/master/modules/openapi-generator-maven-plugin -->
-                            <inputSpec>${project.build.directory}/dependency/step02-openapi.yaml</inputSpec>
-                            <generatorName>spring</generatorName>
-                            <library>spring-boot</library>
-                            <apiPackage>no.maddin.apihandling.step03</apiPackage>
-                            <modelPackage>no.maddin.apihandling.step03.model</modelPackage>
-                            <output>target/generated-sources/openapi</output>
-                            <generateSupportingFiles>false</generateSupportingFiles>
-                            <generateAliasAsModel>true</generateAliasAsModel>
-                            <ignoreFileOverride>${project.basedir}/openapi-generator-ignore</ignoreFileOverride>
-                            <configOptions>
-                                <!--reactive>true</reactive-->
-                                <java8>true</java8>
-                                <interfaceOnly>true</interfaceOnly>
-                                <skipDefaultInterface>true</skipDefaultInterface>
-                                <!--generateSupportingFiles>false</generateSupportingFiles-->
-                                <hideGenerationTimestamp>true</hideGenerationTimestamp>
-                                <!--swaggerDocketConfig>true</swaggerDocketConfig-->
-                                <useTags>true</useTags>
-                                <useSpringBoot3>true</useSpringBoot3>
-                                <dateLibrary>java8</dateLibrary>
-                                <legacyDiscriminatorBehavior>false</legacyDiscriminatorBehavior>
-                            </configOptions>
-                            <!--configHelp>true</configHelp-->
-                        </configuration>
+                        <goals><goal>process</goal></goals>
                     </execution>
                 </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>io.openapiprocessor</groupId>
+                        <artifactId>openapi-processor-spring</artifactId>
+                        <version>2025.4</version>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
     </build>
